@@ -3,6 +3,7 @@
 #include "post_import_plugin_animation_mirror.h"
 
 #include "scene/3d/skeleton_3d.h"
+#include "core/io/resource_importer.h"
 #include "scene/animation/animation_player.h"
 
 SkeletonProfileHumanoidEx::SkeletonProfileHumanoidEx() {
@@ -58,6 +59,10 @@ SkeletonProfileHumanoidEx::SkeletonProfileHumanoidEx() {
 
 void PostImportPluginAnimationMirror::get_internal_import_options(InternalImportCategory p_category, List<ResourceImporter::ImportOption> *r_options) {
 	EditorScenePostImportPlugin::get_internal_import_options(p_category, r_options);
+
+	if (p_category == INTERNAL_IMPORT_CATEGORY_ANIMATION) {
+		r_options->push_back(ResourceImporter::ImportOption(PropertyInfo(Variant::BOOL, "settings/mirror", PROPERTY_HINT_NONE, ""), false));
+	}
 }
 
 void PostImportPluginAnimationMirror::internal_process(InternalImportCategory p_category, Node *p_base_scene, Node *p_node, Ref<Resource> p_resource, const Dictionary &p_options) {
